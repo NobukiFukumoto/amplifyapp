@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "amplifybeed8f83": {}
+      },
+      "api": {
+        "amplify": {}
+      },
+      "storage": {
+        "imagestrage": {}
       }
     }
   }
