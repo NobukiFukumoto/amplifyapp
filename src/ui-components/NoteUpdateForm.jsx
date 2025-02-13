@@ -25,23 +25,29 @@ export default function NoteUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    name: "",
-    description: "",
-    image: "",
+    date: "",
+    customerRepresentative: "",
+    customer: "",
+    title: "",
+    content: "",
   };
-  const [name, setName] = React.useState(initialValues.name);
-  const [description, setDescription] = React.useState(
-    initialValues.description
+  const [date, setDate] = React.useState(initialValues.date);
+  const [customerRepresentative, setCustomerRepresentative] = React.useState(
+    initialValues.customerRepresentative
   );
-  const [image, setImage] = React.useState(initialValues.image);
+  const [customer, setCustomer] = React.useState(initialValues.customer);
+  const [title, setTitle] = React.useState(initialValues.title);
+  const [content, setContent] = React.useState(initialValues.content);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = noteRecord
       ? { ...initialValues, ...noteRecord }
       : initialValues;
-    setName(cleanValues.name);
-    setDescription(cleanValues.description);
-    setImage(cleanValues.image);
+    setDate(cleanValues.date);
+    setCustomerRepresentative(cleanValues.customerRepresentative);
+    setCustomer(cleanValues.customer);
+    setTitle(cleanValues.title);
+    setContent(cleanValues.content);
     setErrors({});
   };
   const [noteRecord, setNoteRecord] = React.useState(noteModelProp);
@@ -61,9 +67,11 @@ export default function NoteUpdateForm(props) {
   }, [idProp, noteModelProp]);
   React.useEffect(resetStateValues, [noteRecord]);
   const validations = {
-    name: [{ type: "Required" }],
-    description: [],
-    image: [],
+    date: [{ type: "Required" }],
+    customerRepresentative: [{ type: "Required" }],
+    customer: [{ type: "Required" }],
+    title: [{ type: "Required" }],
+    content: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -91,9 +99,11 @@ export default function NoteUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
-          description: description ?? null,
-          image: image ?? null,
+          date,
+          customerRepresentative,
+          customer,
+          title,
+          content,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -146,82 +156,147 @@ export default function NoteUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="Name"
+        label="Date"
         isRequired={true}
         isReadOnly={false}
-        value={name}
+        type="date"
+        value={date}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name: value,
-              description,
-              image,
+              date: value,
+              customerRepresentative,
+              customer,
+              title,
+              content,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.date ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.date?.hasError) {
+            runValidationTasks("date", value);
           }
-          setName(value);
+          setDate(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
+        onBlur={() => runValidationTasks("date", date)}
+        errorMessage={errors.date?.errorMessage}
+        hasError={errors.date?.hasError}
+        {...getOverrideProps(overrides, "date")}
       ></TextField>
       <TextField
-        label="Description"
-        isRequired={false}
+        label="Customer representative"
+        isRequired={true}
         isReadOnly={false}
-        value={description}
+        value={customerRepresentative}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
-              description: value,
-              image,
+              date,
+              customerRepresentative: value,
+              customer,
+              title,
+              content,
             };
             const result = onChange(modelFields);
-            value = result?.description ?? value;
+            value = result?.customerRepresentative ?? value;
           }
-          if (errors.description?.hasError) {
-            runValidationTasks("description", value);
+          if (errors.customerRepresentative?.hasError) {
+            runValidationTasks("customerRepresentative", value);
           }
-          setDescription(value);
+          setCustomerRepresentative(value);
         }}
-        onBlur={() => runValidationTasks("description", description)}
-        errorMessage={errors.description?.errorMessage}
-        hasError={errors.description?.hasError}
-        {...getOverrideProps(overrides, "description")}
+        onBlur={() =>
+          runValidationTasks("customerRepresentative", customerRepresentative)
+        }
+        errorMessage={errors.customerRepresentative?.errorMessage}
+        hasError={errors.customerRepresentative?.hasError}
+        {...getOverrideProps(overrides, "customerRepresentative")}
       ></TextField>
       <TextField
-        label="Image"
-        isRequired={false}
+        label="Customer"
+        isRequired={true}
         isReadOnly={false}
-        value={image}
+        value={customer}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
-              description,
-              image: value,
+              date,
+              customerRepresentative,
+              customer: value,
+              title,
+              content,
             };
             const result = onChange(modelFields);
-            value = result?.image ?? value;
+            value = result?.customer ?? value;
           }
-          if (errors.image?.hasError) {
-            runValidationTasks("image", value);
+          if (errors.customer?.hasError) {
+            runValidationTasks("customer", value);
           }
-          setImage(value);
+          setCustomer(value);
         }}
-        onBlur={() => runValidationTasks("image", image)}
-        errorMessage={errors.image?.errorMessage}
-        hasError={errors.image?.hasError}
-        {...getOverrideProps(overrides, "image")}
+        onBlur={() => runValidationTasks("customer", customer)}
+        errorMessage={errors.customer?.errorMessage}
+        hasError={errors.customer?.hasError}
+        {...getOverrideProps(overrides, "customer")}
+      ></TextField>
+      <TextField
+        label="Title"
+        isRequired={true}
+        isReadOnly={false}
+        value={title}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              date,
+              customerRepresentative,
+              customer,
+              title: value,
+              content,
+            };
+            const result = onChange(modelFields);
+            value = result?.title ?? value;
+          }
+          if (errors.title?.hasError) {
+            runValidationTasks("title", value);
+          }
+          setTitle(value);
+        }}
+        onBlur={() => runValidationTasks("title", title)}
+        errorMessage={errors.title?.errorMessage}
+        hasError={errors.title?.hasError}
+        {...getOverrideProps(overrides, "title")}
+      ></TextField>
+      <TextField
+        label="Content"
+        isRequired={true}
+        isReadOnly={false}
+        value={content}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              date,
+              customerRepresentative,
+              customer,
+              title,
+              content: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.content ?? value;
+          }
+          if (errors.content?.hasError) {
+            runValidationTasks("content", value);
+          }
+          setContent(value);
+        }}
+        onBlur={() => runValidationTasks("content", content)}
+        errorMessage={errors.content?.errorMessage}
+        hasError={errors.content?.hasError}
+        {...getOverrideProps(overrides, "content")}
       ></TextField>
       <Flex
         justifyContent="space-between"

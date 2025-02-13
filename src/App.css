@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.notes-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.notes-table th,
+.notes-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.notes-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
